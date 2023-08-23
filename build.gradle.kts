@@ -24,6 +24,10 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.springframework.boot:spring-boot-starter-aop")
+
+	implementation("io.jsonwebtoken:jjwt:0.9.1")
+
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
@@ -37,4 +41,34 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+// 2023.01.16[holywater]: apllication.yml이 여러 개이기때문에 INCLUDE
+tasks.processResources {
+	duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+// 2023.01.16[holywater]: build 파일 이름 변경
+tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+	archiveBaseName.set("ROOT")
+}
+
+// 2023.01.16[holywater]: profile
+var profiles = "local"
+if (project.hasProperty("profile")) {
+	profiles = project.property("profile").toString()
+}
+
+val active: String? = System.getProperty("spring.profiles.active")
+if (active != null) {
+	profiles = active
+}
+
+// 2023.01.16[holywater]: 빌드 환경에 따른 프로퍼티 경로 지정
+sourceSets {
+	main {
+		resources {
+			srcDirs(listOf("src/main/resources", "src/main/resources-${profiles}"))
+		}
+	}
 }
