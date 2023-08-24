@@ -15,10 +15,9 @@ import voyagersoft.mockbot.config.CommonException
 
 @RequestMapping("/user")
 @RestController
-class UserController {
-
-    @Autowired
-    private lateinit var userService: UserService
+class UserController(
+    private val userService: UserService
+) {
 
     @PostMapping("/login")
     @Throws(CommonException::class)

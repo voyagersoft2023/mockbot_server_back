@@ -31,6 +31,8 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt:0.9.1")
 	implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
 
+	implementation("org.apache.httpcomponents:httpclient:4.5.14")
+
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
