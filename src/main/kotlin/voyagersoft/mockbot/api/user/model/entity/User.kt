@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull
 @Entity
 @Table(
     name = "Users", indexes = [
-        Index(name = "Users", columnList = "id"),
+        Index(name = "i_users_id", columnList = "id"),
     ]
 )
 @DynamicInsert
@@ -26,7 +26,29 @@ class User {
     @NotNull
     var email: String = ""
 
+    @Comment("이전 패스워드")
+    var prePassword: String = ""
+
     @Comment("패스워드")
     @NotNull
     var password: String = ""
+
+    @Comment("휴대폰번호")
+    var phoneNumber: String = ""
+
+    @Comment("회사명")
+    var company: String = ""
+
+    @Comment("사용여부")
+    var useYn: String = ""
+
+    @Comment("약관동의여부")
+    var privacy: String = ""
+
+    @Comment("마지막 로그인 일자")
+    var lastLoginDt: String = ""
+
+    @Comment("권한")
+    var role: String = ""
+
 }
